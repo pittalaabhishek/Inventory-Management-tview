@@ -55,17 +55,13 @@ func main() {
 
 	// Create a TextView that will display the inventory items in the TUI
 	inventoryList := tview.NewTextView().
-		SetDynamicColors(true). // Enable dynamic coloring of text
-		SetRegions(true).       // Allows regions for interaction (not used here)
-		SetWordWrap(true)       // Enables word wrapping to fit the TextView size
+		SetDynamicColors(true).
+		SetRegions(true).
+		SetWordWrap(true)
 
-	inventoryList.SetBorder(true).SetTitle("Inventory Items") // Set border and title
-
-	// This function refreshes the inventory display whenever there are changes
+	inventoryList.SetBorder(true).SetTitle("Inventory Items")
 	refreshInventory := func() {
-		// Clear the current content of the TextView
 		inventoryList.Clear()
-		// If inventory is empty, display a message
 		if len(inventory) == 0 {
 			fmt.Fprintln(inventoryList, "No items in inventory.")
 		} else {
@@ -100,13 +96,10 @@ func main() {
 					fmt.Fprintln(inventoryList, "Invalid stock value.")
 					return
 				}
-				// Add the new item to the inventory slice
 				inventory = append(inventory, Item{Name: name, Stock: quantity})
 				// Save the updated inventory
 				saveInventory()
-				// Refresh the inventory display
 				refreshInventory()
-				// Clear the input fields after adding the item
 				itemNameInput.SetText("")
 				itemStockInput.SetText("")
 			}
@@ -118,7 +111,6 @@ func main() {
 				fmt.Fprintln(inventoryList, "Please enter an item ID to delete.")
 				return
 			}
-			// Convert the ID to an integer and check if it's valid
 			id, err := strconv.Atoi(idStr)
 			if err != nil || id < 1 || id > len(inventory) {
 				fmt.Fprintln(inventoryList, "Invalid item ID.")
